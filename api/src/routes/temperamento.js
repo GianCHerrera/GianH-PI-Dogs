@@ -1,3 +1,4 @@
+const axios = require('axios');
 const { Router } = require('express');
 const { Temperamentos } = require('../db');
 
@@ -5,13 +6,28 @@ const router = Router();
 
 
 router.get('/', (req, res, next) => {
-    return Temperamentos.findAll()
-        .then((tmp) => {
-            res.send(tmp)
-        })
-        .catch(error => {
-            next(error);
-        })
+        let listTemperaments = [], uniqueTemperaments = [];
+        axios.get('https://api.thedogapi.com/v1/breeds')
+            .then(async repuesta => {
+                repuesta.data.map((breed) => {
+                    let list = String(breed.temperament)
+                    let temps = list.split(', ')
+                    listTemperaments = [...listTemperaments, ...temps]
+                })
+                const setTemperaments = new Set(listTemperaments);
+                uniqueTemperaments = [...setTemperaments];
+                console.log(uniqueTemperaments)
+                uniqueTemperaments.map(element => {
+                    Temperamentos.findOrCreate({
+                        where: {
+                            nombre: element
+                        }
+                    })
+                })
+                const temperaments = await Temperamentos.findAll()
+                res.send(temperaments)
+            })
+            .catch(error=> next(error))
 })
 router.post('/', async (req, res, next) => {
 
