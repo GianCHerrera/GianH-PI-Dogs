@@ -33,14 +33,14 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Razas,Temperamentos } = sequelize.models;
 
 Razas.belongsToMany(Temperamentos,{
-  through: 'RazaTemperamento'
+  through: 'razatemperamento'
 })
 
 // Como es una relacion de muchos a muchos .belongs to many 
 // se debe hacer por parte de los 2 modelos para poder crear la tabla intermedia
  
 Temperamentos.belongsToMany(Razas ,{
-  through: 'RazaTemperamento'
+  through: 'razatemperamento'
 })
 
 // Aca vendrian las relaciones
