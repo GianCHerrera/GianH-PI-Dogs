@@ -1,9 +1,12 @@
 import './App.css';
+import Dogs from './components/dogs';
+import SearchBar from './components/serachbar';
 
 function App() {
   return (
     <div className="App">
-      <h1>Henry Dogs</h1>
+      <SearchBar />
+      <Dogs />
     </div>
   );
 }

@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
                 })
                 const setTemperaments = new Set(listTemperaments);
                 uniqueTemperaments = [...setTemperaments];
-                console.log(uniqueTemperaments)
+                console.log(uniqueTemperaments.length)
                 uniqueTemperaments.map(element => {
                     Temperamentos.findOrCreate({
                         where: {
