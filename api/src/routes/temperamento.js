@@ -16,13 +16,14 @@ router.get('/', (req, res, next) => {
                 })
                 const setTemperaments = new Set(listTemperaments);
                 uniqueTemperaments = [...setTemperaments];
-                console.log(uniqueTemperaments.length)
                 uniqueTemperaments.map(element => {
-                    Temperamentos.findOrCreate({
-                        where: {
-                            nombre: element
-                        }
-                    })
+                    if( element !== 'undefined'){
+                        Temperamentos.findOrCreate({
+                            where: {
+                                nombre: element
+                            }
+                        })
+                    }
                 })
                 const temperaments = await Temperamentos.findAll()
                 res.send(temperaments)

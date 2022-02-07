@@ -1,7 +1,7 @@
 
 import { useDispatch } from "react-redux";
 import { API, BASE_DE_DATOS, TODOS } from "../constantes/filter";
-import { getApiDogs } from "../store/actions";
+import { filterBySource } from "../store/actions";
 
 
 export default function FilterRazas(){
@@ -9,10 +9,10 @@ export default function FilterRazas(){
     let dispatch = useDispatch();
 
     function onSelectChange(e){
-        dispatch(getApiDogs())
+        dispatch(filterBySource(e.target.value))
     }
 
-    return <select name="filter" onChange={onSelectChange} >
+    return <select name="filterDogs" onChange={onSelectChange} >
         <option selected disabled> Seleccionar Recurso</option>
         <option value={API}> API</option>
         <option value={BASE_DE_DATOS}> Base de Datos</option>

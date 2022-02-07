@@ -83,18 +83,21 @@ router.get('/db', (req,res,next)=>{
 
 router.get('/:id',  async (req, res, next) => { 
     let { id } = req.params;
+
     
     if (typeof id === 'string' && id.length < 10) {
+        let pesoMaximo;
         id=parseInt(id)
         let dogsApi =  await axios.get('https://api.thedogapi.com/v1/breeds/');
         let resApi = {};
         dogsApi.data.map(dog =>{
+            pesoMaximo = (dog.weight.imperial).split(' - ')
             if(dog.id === id){
                 resApi = {
                     id: dog.id,
                 nombre: dog.name,
                 altura: dog.height,
-                peso: dog.weight.imperial,
+                peso: parseFloat(pesoMaximo[pesoMaximo.length-1]),
                 añosDeVida: dog.life_span,
                 imagen: dog.image.url,
                 temperamentos:dog.temperament
@@ -141,12 +144,14 @@ router.post('/:dogsId/temperament/:temperamentId', (req, res, next) => {
 
 async function getApiDogs (){
     const apiRequest = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
+    let pesoMaximo;
     const apiDogs = await apiRequest.data.map( dog=>{
+        pesoMaximo = (dog.weight.imperial).split(' - ')
         return{
             id: dog.id,
             nombre: dog.name,
             altura: dog.height,
-            peso: [dog.weight.imperial, dog.weight.metric],
+            peso: parseFloat(pesoMaximo[pesoMaximo.length-1]),
             añosDeVida: dog.life_span,
             imagen: dog.image.url,
             temperamentos:dog.temperament

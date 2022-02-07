@@ -1,5 +1,5 @@
 import { ASCENDENTE, DESCENDENTE, PESOASCENDENTE, PESODESCENDENTE } from "../../constantes/sort"
-import { API_DOGS, FETCH_DOGS, FILTER_RESOURCE, SEARCH_DOGS, SORT } from "../actions"
+import { API_DOGS, DB_DOGS, FETCH_DOGS, FILTER_BY_TEMPERAMENT, GET_TEMPERAMENTS, SEARCH_DOGS, SORT } from "../actions"
 
 
 const intialState = {
@@ -7,7 +7,8 @@ const intialState = {
     filteredDogs: [],
     temperaments: [],
     filteredTemperaments: [],
-    apiDogs: []
+    apiDogs: [],
+    dbDogs: []
 }
 
 
@@ -25,15 +26,35 @@ export default function reducer(state = intialState, action) {
                 filteredDogs: action.payload
             }
         case API_DOGS:
-            return{
+            return {
                 ...state,
-                apiDogs: action.payload
+                filteredDogs: action.payload
             }
-        
-        case FILTER_RESOURCE:
-            return{
-                
+        case DB_DOGS:
+            return {
+                ...state,
+                filteredDogs: action.payload
             }
+        case GET_TEMPERAMENTS:
+            return {
+                ...state,
+                temperaments: action.payload,
+                filteredTemperaments: action.payload
+            }
+        case FILTER_BY_TEMPERAMENT:
+            let filterDogsByTemperament = [...state.filteredDogs];
+            let result = [];
+            filterDogsByTemperament.map(dog => {
+                if (String(dog.temperamentos).includes(action.payload)){
+                    return result.push(dog)
+                }
+            })
+            return {
+                ...state,
+                filteredDogs: result
+            }
+
+
 
         case SORT:
             let orderedDogs = [...state.filteredDogs]
@@ -62,29 +83,32 @@ export default function reducer(state = intialState, action) {
                         return 0;
                     })
                     break;
-                
-                    case ASCENDENTE:
-                        orderedDogs = orderedDogs.sort((a, b) => {
-                            if (a.nombre < b.nombre) {
-                                return -1;
-                            }
-                            if (a.nombre > b.nombre) {
-                                return  1 ;
-                            }
-                            return 0;
-                        })
-                        break;
 
-                    case DESCENDENTE:
-                        orderedDogs = orderedDogs.sort((a, b) => {
-                            if (a.nombre < b.nombre) {
-                                return  1 ;
-                            }
-                            if (a.nombre > b.nombre) {
-                                return  -1;
-                            }
-                            return 0;
-                        })
+                case ASCENDENTE:
+                    orderedDogs = orderedDogs.sort((a, b) => {
+                        if (a.nombre < b.nombre) {
+                            return -1;
+                        }
+                        if (a.nombre > b.nombre) {
+                            return 1;
+                        }
+                        return 0;
+                    })
+                    break;
+
+                case DESCENDENTE:
+                    orderedDogs = orderedDogs.sort((a, b) => {
+                        if (a.nombre < b.nombre) {
+                            return 1;
+                        }
+                        if (a.nombre > b.nombre) {
+                            return -1;
+                        }
+                        return 0;
+                    })
+                    break;
+                default:
+                    break;
             }
             return {
                 ...state,
