@@ -19,11 +19,14 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     peso: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false
     },
     añosDeVida:{
       type: DataTypes.INTEGER,
+    },
+    imagen:{
+      type: DataTypes.BLOB
     }
   });
 };

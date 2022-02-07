@@ -2,6 +2,7 @@ const { Router } = require('express');
 const axios = require('axios');
 const { Op } = require('sequelize');
 const { Razas, Temperamentos } = require('../db');
+const { API_KEY } = process.env
 const router = Router();
 
 
@@ -19,12 +20,14 @@ router.get('/', (req, res, next) => {
     ])
         .then((respuesta) => {
             const [dogsApi, dogsDb] = respuesta;
+            let pesoMaximo;
             let dogsApiCorrectInfo = dogsApi.data.map((dog) => {
+                pesoMaximo = (dog.weight.imperial).split(' - ')
                 return {
                     id: dog.id,
                     nombre: dog.name,
                     altura: dog.height,
-                    peso: [dog.weight.imperial, dog.weight.metric],
+                    peso: parseFloat(pesoMaximo[pesoMaximo.length-1]),
                     añosDeVida: dog.life_span,
                     imagen: dog.image.url,
                     temperamentos:dog.temperament
@@ -44,6 +47,7 @@ router.get('/', (req, res, next) => {
             // console.log(dogsDb[0].dataValues.temperamentos.dataValues.nombre)
              let allDogs = [...dogsApiCorrectInfo, ...dogsDb]
             if (name) {
+                // Si hay un name en query, lo busca tanto en la api con en la db
                 let searchResult = [];
                 for(let i=0; i<allDogs.length; i++){
                     let str = String(allDogs[i].nombre).toLowerCase()
@@ -63,7 +67,19 @@ router.get('/', (req, res, next) => {
         .catch(error => next(error))
 })
 
+router.get('/apidogs', async  (req,res,next)=>{
+    const allDogs = await getApiDogs();
+    res.send(allDogs)
+})
 
+router.get('/db', (req,res,next)=>{
+    return Razas.findAll({
+        include: Temperamentos
+    })
+    .then(respuesta=>{
+        res.send(respuesta)
+    }).catch(error=> next(error))
+})
 
 router.get('/:id',  async (req, res, next) => { 
     let { id } = req.params;
@@ -78,7 +94,7 @@ router.get('/:id',  async (req, res, next) => {
                     id: dog.id,
                 nombre: dog.name,
                 altura: dog.height,
-                peso: dog.weight,
+                peso: dog.weight.imperial,
                 añosDeVida: dog.life_span,
                 imagen: dog.image.url,
                 temperamentos:dog.temperament
@@ -95,6 +111,8 @@ router.get('/:id',  async (req, res, next) => {
     }
     
 })
+
+
 
 
 router.post('/', (req, res, next) => {
@@ -120,6 +138,22 @@ router.post('/:dogsId/temperament/:temperamentId', (req, res, next) => {
         next(error);
     }
 })
+
+async function getApiDogs (){
+    const apiRequest = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
+    const apiDogs = await apiRequest.data.map( dog=>{
+        return{
+            id: dog.id,
+            nombre: dog.name,
+            altura: dog.height,
+            peso: [dog.weight.imperial, dog.weight.metric],
+            añosDeVida: dog.life_span,
+            imagen: dog.image.url,
+            temperamentos:dog.temperament
+        }
+    })
+    return apiDogs;
+}
 
 async function mixinDogTemperament(dogsId, temperamentId){
         const raza = await Razas.findByPk(dogsId);

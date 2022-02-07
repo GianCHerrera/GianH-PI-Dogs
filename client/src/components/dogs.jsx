@@ -5,12 +5,12 @@ import Dog from './dog';
  
  export default function Dogs(){
 
-    let dogs = useSelector((state)=>state.dogs);
+    let dogs = useSelector((state)=>state.filteredDogs);
     let dispatch = useDispatch()
     useEffect(()=>{
         dispatch(fetchDogs())
     },[])
-    console.log(dogs)
+
      return <div> 
 
         {dogs.map((dog)=>{
