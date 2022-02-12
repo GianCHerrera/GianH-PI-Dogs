@@ -45,7 +45,7 @@ export function sort(order){
 }
 
 export function filterBySource(resource){
-    if(resource === API){
+    if(resource === API || resource === 'Filtrar por Recurso'){
         return getApiDogs();
     }else if(resource === BASE_DE_DATOS){
         return getDbDogs();
@@ -55,8 +55,8 @@ export function filterBySource(resource){
 }
 
 export function filterByTemperament(temperament){
-    console.log(temperament==='.Todos');
-    if(temperament==='.Todos'){
+
+    if(temperament==='.Todos' || temperament==='Filtrar por Temperamento'){
         return fetchDogs();
 
     }else{

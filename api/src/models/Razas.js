@@ -14,19 +14,33 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    altura:{
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    peso: {
+    alturaMaxima:{
       type: DataTypes.FLOAT,
       allowNull: false
     },
+    pesoMaximo: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    alturaMinima:{
+      type: DataTypes.FLOAT,
+      defaultValue: 0
+    },
+    pesoMinimo: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0
+    },
     añosDeVida:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
+      defaultValue: 'No Definido'
     },
     imagen:{
-      type: DataTypes.BLOB
+      type: DataTypes.TEXT,
+      defaultValue: 'No Definido'
+    },
+    temperamentos:{
+      type: DataTypes.STRING,
+      defaultValue: 'No Definido'
     }
   });
 };

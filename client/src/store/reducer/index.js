@@ -48,6 +48,7 @@ export default function reducer(state = intialState, action) {
                 if (String(dog.temperamentos).includes(action.payload)){
                     return result.push(dog)
                 }
+                return{}
             })
             return {
                 ...state,
@@ -62,10 +63,10 @@ export default function reducer(state = intialState, action) {
 
                 case PESOASCENDENTE:
                     orderedDogs = orderedDogs.sort((a, b) => {
-                        if (a.peso > b.peso) {
+                        if (a.pesoMaximo > b.pesoMaximo) {
                             return 1;
                         }
-                        if (a.peso < b.peso) {
+                        if (a.pesoMaximo < b.pesoMaximo) {
                             return -1;
                         }
                         return 0;
@@ -74,10 +75,10 @@ export default function reducer(state = intialState, action) {
 
                 case PESODESCENDENTE:
                     orderedDogs = orderedDogs.sort((a, b) => {
-                        if (a.peso > b.peso) {
+                        if (a.pesoMaximo > b.pesoMaximo) {
                             return -1;
                         }
-                        if (a.peso < b.peso) {
+                        if (a.pesoMaximo < b.pesoMaximo) {
                             return 1;
                         }
                         return 0;

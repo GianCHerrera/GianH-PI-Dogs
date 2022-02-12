@@ -4,16 +4,18 @@ import Dog from './Dog';
 export default function Dogs({ currentDogs }) {
   return <div>
     {
-      console.log(currentDogs)
-    }
-    {
-      currentDogs && currentDogs.map((dog) => {
+      currentDogs && currentDogs.map((dog,i) => {
         return <Dog
+          key={dog.id}
           id={dog.id}
-          name={dog.nombre}
-          image={dog.imagen}
-          temperamento={dog.temperamentos}
-          peso={dog.peso}
+          nombre={dog.nombre}
+          imagen={dog.imagen}
+          temperamentos={dog.temperamentos}
+          pesoMaximo={dog.pesoMaximo}
+          pesoMinimo={dog.pesoMinimo}
+          alturaMaxima={dog.alturaMaxima}
+          alturaMinima={dog.alturaMinima}
+          añosDeVida={dog.añosDeVida}
         />
       })
   }

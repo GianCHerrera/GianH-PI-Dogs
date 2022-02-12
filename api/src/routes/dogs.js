@@ -20,35 +20,41 @@ router.get('/', (req, res, next) => {
     ])
         .then((respuesta) => {
             const [dogsApi, dogsDb] = respuesta;
-            let pesoMaximo;
+            let getPesoMaximo, getAlturaMaxima, getAñosDeVida;
             let dogsApiCorrectInfo = dogsApi.data.map((dog) => {
-                pesoMaximo = (dog.weight.imperial).split(' - ')
+                getPesoMaximo = (dog.weight.imperial).split(' - ')
+                getAlturaMaxima = (dog.height.imperial).split(' - ')
+                getAñosDeVida = (dog.life_span).split( ' years')
                 return {
                     id: dog.id,
                     nombre: dog.name,
                     altura: dog.height,
-                    peso: parseFloat(pesoMaximo[pesoMaximo.length-1]),
-                    añosDeVida: dog.life_span,
+                    pesoMaximo: parseFloat(getPesoMaximo[getPesoMaximo.length-1]),
+                    pesoMinimo: parseFloat(getPesoMaximo[0]),
+                    alturaMaxima: parseFloat(getAlturaMaxima[getAlturaMaxima.length-1]),
+                    alturaMinima: parseFloat(getAlturaMaxima[0]),
+                    añosDeVida: getAñosDeVida[0],
                     imagen: dog.image.url,
                     temperamentos:dog.temperament
                 }
             })
 
-            dogsDb.map(dog =>{
-                if(dog.dataValues.temperamentos.length!==0){
-                    let str = '';
-                    dog.dataValues.temperamentos.map(temp=>{
-                        str = str + temp.dataValues.nombre + ', '
-                    })
-                    dog.dataValues.temperamentos = str;
-                }
-            })
+            // dogsDb.map(dog =>{
+            //     if(dog.dataValues.temperaments.length!==0){
+            //         let str = '';
+            //         dog.dataValues.temperaments.map(temp=>{
+            //             str = str + temp.dataValues.nombre + ', '
+            //         })
+            //         dog.dataValues.temperaments = str;
+            //     }
+            // })
             
             // console.log(dogsDb[0].dataValues.temperamentos.dataValues.nombre)
              let allDogs = [...dogsApiCorrectInfo, ...dogsDb]
             if (name) {
                 // Si hay un name en query, lo busca tanto en la api con en la db
                 let searchResult = [];
+
                 for(let i=0; i<allDogs.length; i++){
                     let str = String(allDogs[i].nombre).toLowerCase()
                     if(str.includes(name)){
@@ -86,21 +92,26 @@ router.get('/:id',  async (req, res, next) => {
 
     
     if (typeof id === 'string' && id.length < 10) {
-        let pesoMaximo;
         id=parseInt(id)
         let dogsApi =  await axios.get('https://api.thedogapi.com/v1/breeds/');
         let resApi = {};
         dogsApi.data.map(dog =>{
-            pesoMaximo = (dog.weight.imperial).split(' - ')
+
+            getPesoMaximo = (dog.weight.imperial).split(' - ')
+                getAlturaMaxima = (dog.height.imperial).split(' - ')
+                getAñosDeVida = (dog.life_span).split( ' years')
             if(dog.id === id){
                 resApi = {
                     id: dog.id,
-                nombre: dog.name,
-                altura: dog.height,
-                peso: parseFloat(pesoMaximo[pesoMaximo.length-1]),
-                añosDeVida: dog.life_span,
-                imagen: dog.image.url,
-                temperamentos:dog.temperament
+                    nombre: dog.name,
+                    altura: dog.height,
+                    pesoMaximo: parseFloat(getPesoMaximo[getPesoMaximo.length-1]),
+                    pesoMinimo: parseFloat(getPesoMaximo[0]),
+                    alturaMaxima: parseFloat(getAlturaMaxima[getAlturaMaxima.length-1]),
+                    alturaMinima: parseFloat(getAlturaMaxima[0]),
+                    añosDeVida: getAñosDeVida[0],
+                    imagen: dog.image.url,
+                    temperamentos:dog.temperament
                 }  
             }
         })
@@ -119,51 +130,67 @@ router.get('/:id',  async (req, res, next) => {
 
 
 router.post('/', (req, res, next) => {
-    const { nombre, altura, peso, añosDeVida } = req.body;
-    return Razas.create({
-        nombre,
-        altura,
-        peso,
-        añosDeVida
-    })
-    .then((newRaza) => {
-        res.status(201).send(newRaza);
-    })
-    .catch(error => next(error))
+    const { nombre, imagen, alturaMaxima, pesoMaximo,alturaMinima, pesoMinimo,añosDeVida,temperamentos } = req.body;
+
+    if(nombre, alturaMaxima,pesoMaximo){
+        return Razas.create({
+            nombre,
+            alturaMaxima,
+            pesoMaximo,
+            alturaMinima,
+            pesoMinimo,
+            añosDeVida,
+            imagen,
+            temperamentos
+        })
+        .then((newRaza) => {
+            res.status(201).send(newRaza);
+        })
+        .catch(error => next(error))
+    }else{
+        res.send('No hay suficiente información para agregar Raza')
+    }
+
+    
 })
 
 router.post('/:dogsId/temperament/:temperamentId', (req, res, next) => {
     try {
         const { dogsId, temperamentId } = req.params;
         mixinDogTemperament(dogsId,temperamentId)
-        res.status(201).send('ok')
+        res.status(201)
     } catch (error) {
         next(error);
     }
 })
 
+async function mixinDogTemperament(dogsId, temperamentId){
+        const raza = await Razas.findByPk(dogsId);
+        await raza.addTemperaments(temperamentId); // mixin de sequelize, donde comienza por add y termina con el nombre de la tabla
+}
 async function getApiDogs (){
     const apiRequest = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
-    let pesoMaximo;
     const apiDogs = await apiRequest.data.map( dog=>{
-        pesoMaximo = (dog.weight.imperial).split(' - ')
+
+        getPesoMaximo = (dog.weight.imperial).split(' - ')
+        getAlturaMaxima = (dog.height.imperial).split(' - ')
+        getAñosDeVida = (dog.life_span).split( ' years')
         return{
             id: dog.id,
-            nombre: dog.name,
-            altura: dog.height,
-            peso: parseFloat(pesoMaximo[pesoMaximo.length-1]),
-            añosDeVida: dog.life_span,
-            imagen: dog.image.url,
-            temperamentos:dog.temperament
+                    nombre: dog.name,
+                    altura: dog.height,
+                    pesoMaximo: parseFloat(getPesoMaximo[getPesoMaximo.length-1]),
+                    pesoMinimo: parseFloat(getPesoMaximo[0]),
+                    alturaMaxima: parseFloat(getAlturaMaxima[getAlturaMaxima.length-1]),
+                    alturaMinima: parseFloat(getAlturaMaxima[0]),
+                    añosDeVida: getAñosDeVida[0],
+                    imagen: dog.image.url,
+                    temperamentos:dog.temperament
         }
     })
     return apiDogs;
 }
 
-async function mixinDogTemperament(dogsId, temperamentId){
-        const raza = await Razas.findByPk(dogsId);
-        await raza.addTemperamentos(temperamentId); // mixin de sequelize, donde comienza por add y termina con el nombre de la tabla
-}
 
 
 // router.get('/',async (req,res,next)=>{

@@ -1,0 +1,96 @@
+.botonEnviar:disabled{
+height: 2rem;
+position: fixed;
+    right: 1rem;
+    bottom: 2rem;
+    height: 2.2rem;
+    width: 8rem;
+    border-radius: .3rem;
+    font-size: 1.3rem;
+    color: lightgray;
+    border-style: none;
+    background: linear-gradient(to left, #282C35 50%, lightgray 50%) right;
+    background-size: 200%;
+    opacity: .2;
+}
+.botonEnviar:enabled{
+    position: fixed;
+    right: 1rem;
+    bottom: 2rem;
+    height: 2.2rem;
+    width: 8rem;
+    border-radius: .3rem;
+    font-size: 1.3rem;
+    color: lightgray;
+    border-style: none;
+    background: linear-gradient(to left, #282C35 50%, lightgray 50%) right;
+    background-size: 200%;
+    transition: .6s ease-out;
+}
+.botonEnviar:enabled:hover{
+    background-position: left;
+    color:#282C35 ;
+    cursor: pointer;
+}
+.contenedorTemperamentos{
+    display: flex;
+    justify-content: center;
+}
+.selectTemps{
+    margin-top: 2rem;
+    font-size: 1.3rem;
+    height: 2.5rem;
+    background: transparent;
+    color: white;
+    border: none;
+    margin-right: 3rem;
+}
+.contenedorSpanTemperamentos{
+
+    margin-top: 2rem;
+    height: 6rem;
+    width: 15rem;
+    border-radius: 1rem;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.contenedorTemperamentos::-webkit-scrollbar{
+    display: none;
+}
+.spanTemperament{
+    font-size: 1.3rem;
+}
+.botonAgregarTemps:disabled{
+    height: 2rem;
+    position: fixed;
+    left: 2rem;
+    bottom: 2rem;
+    height: 2.2rem;
+    width: auto;
+    border-radius: .3rem;
+    font-size: 1.3rem;
+    color: lightgray;
+    border-style: none;
+    background: linear-gradient(to left, #282C35 50%, lightgray 50%) right;
+    background-size: 200%;
+    opacity: .2;
+}
+.botonAgregarTemps:enabled{
+    position: fixed;
+    left: 2rem;
+    bottom: 2rem;
+    height: 2.2rem;
+    width: auto;
+    border-radius: .3rem;
+    font-size: 1.3rem;
+    color: lightgray;
+    border-style: none;
+    background: linear-gradient(to left, lightgray 50%, #282C35 50%) left;
+    background-size: 200%;
+    transition: .4s ease-out;
+}
+.botonAgregarTemps:hover{
+    background-position: right;
+    color:#282C35 ;
+    cursor: pointer;
+}

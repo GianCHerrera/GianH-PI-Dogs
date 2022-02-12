@@ -7,9 +7,9 @@ export default function Paginado({dogsPerPage, allDogs, paginado}){
 
     return <nav>
         <ul>
-            {pageNumber && pageNumber.map(number =>{
-                return <li>
-                    <a onClick={()=> paginado(number)} key={number}>{number}</a>
+            {pageNumber && pageNumber.map((number,i) =>{
+                return <li key={i}>
+                    <button onClick={()=> paginado(number)} >{number}</button>
                 </li>
             })}
         </ul>

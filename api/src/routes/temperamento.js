@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { Router } = require('express');
-const { Temperamentos } = require('../db');
+const { Temperaments } = require('../db');
 
 const router = Router();
 
@@ -18,14 +18,14 @@ router.get('/', (req, res, next) => {
                 uniqueTemperaments = [...setTemperaments];
                 uniqueTemperaments.map(element => {
                     if( element !== 'undefined'){
-                        Temperamentos.findOrCreate({
+                        Temperaments.findOrCreate({
                             where: {
                                 nombre: element
                             }
                         })
                     }
                 })
-                const temperaments = await Temperamentos.findAll()
+                const temperaments = await Temperaments.findAll()
                 res.send(temperaments)
             })
             .catch(error=> next(error))
@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
     try {
         const { nombre } = req.body;
         console.log(req.body); // esto da undefined por postman, por thunder clien sirve
-        const newTemperament = await Temperamentos.create({ nombre })
+        const newTemperament = await Temperaments.create({ nombre })
         res.status(201).send(newTemperament);
 
     } catch (error) {
