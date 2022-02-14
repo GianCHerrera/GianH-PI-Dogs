@@ -1,3 +1,5 @@
+import '../Styles/PaginadoStyle.css'
+
 export default function Paginado({dogsPerPage, allDogs, paginado}){
     const pageNumber =[];
     
@@ -5,13 +7,13 @@ export default function Paginado({dogsPerPage, allDogs, paginado}){
         pageNumber.push(i)
     }
 
-    return <nav>
-        <ul>
+    return <div className='contenedorPaginado'>
+        <ul className="unorderedListPaginado">
             {pageNumber && pageNumber.map((number,i) =>{
-                return <li key={i}>
-                    <button onClick={()=> paginado(number)} >{number}</button>
+                return <li className="liPaginado" key={i}>
+                    <button className='botonPaginado' onClick={()=> paginado(number)} >{number}</button>
                 </li>
             })}
         </ul>
-    </nav>
+    </div>
 }

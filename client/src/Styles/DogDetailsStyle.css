@@ -1,0 +1,48 @@
+p{
+    font-size: 1.4rem;
+}
+.contenedorDogDetails{
+    background-image: url('https://s1.best-wallpaper.net/wallpaper/m/1806/Dog-look-up-black-background_m.jpg');
+    background-size: cover;
+    color: white;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contenedorDogDetail{
+
+    background-color: transparent;
+    backdrop-filter: blur(8px);
+    width: 29rem;
+    border-radius: 1rem;
+}
+
+.TitleDogDetails{
+    padding-top: 2rem;
+    margin-top: 0;
+
+}
+.imgDogDetails{
+    max-height: 20rem;
+    min-width: 20rem;
+}
+.botonVolver{
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    height: 2.2rem;
+    width: 9rem;
+    border-radius: .3rem;
+    font-size: 1.4rem;
+    color: lightgray;
+    border-style: none;
+    background: linear-gradient(to left, #282C35 50%, lightgray  50%) right;
+    background-size: 200%;
+    transition: .3s ease-out;
+}
+.botonVolver:hover{
+    background-position: left;
+    color:#282C35 ;
+    cursor: pointer;
+}

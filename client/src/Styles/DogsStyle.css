@@ -1,0 +1,7 @@
+.contenedorDogsGrid{
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 20rem 20rem 20rem 20rem;
+    gap: 2rem;
+
+}

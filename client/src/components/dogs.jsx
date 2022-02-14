@@ -1,8 +1,9 @@
 import Dog from './Dog';
+import '../Styles/DogsStyle.css'
 
 
 export default function Dogs({ currentDogs }) {
-  return <div>
+  return <div className='contenedorDogsGrid'>
     {
       currentDogs && currentDogs.map((dog,i) => {
         return <Dog

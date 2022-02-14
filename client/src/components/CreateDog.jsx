@@ -6,7 +6,7 @@ import { getDbTemperaments } from "../store/actions";
 import { BigDiv, Campo, FlexCenterDiv, Height, InputForm, Label, SpanObligatoriedad, Tamanio } from "../Styles/CreateStyle";
 import OptionSelect from "./OptionSelect";
 import OptionSelectDefault from "./OptionSelectDefault";
-import '../Styles/Create.css'
+import '../Styles/CreateStyle.css'
 
 export default function CreateDog() {
 
@@ -22,7 +22,7 @@ export default function CreateDog() {
     let history = useHistory();
     let boton = document.getElementById('enviar')
     let botonTemperamentos = document.getElementById('enviarTemps')
-
+    let str = '';
 
     function validarInput(e) {
 
@@ -159,7 +159,7 @@ export default function CreateDog() {
             ...dog,
             [e.target.name]: e.target.value
         })
-        if (dog.nombre  && dog.alturaMaxima && dog.pesoMaximo) {
+        if (dog.nombre && dog.alturaMaxima && dog.pesoMaximo) {
             boton.disabled = false
         }
 
@@ -167,23 +167,24 @@ export default function CreateDog() {
     }
 
     function onSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
         axios.post('http://localhost:3001/api/dogs/', dog)
             .then(() => {
                 history.push('/main')
             }).catch(error => console.log(error))
+            return false
     }
 
-    function onClickAdd(e) {
-        e.preventDefault()
-        let str = '';
-        temperamentosAll.map(z => {
-            str = str + z + ', '
-        })
-        setDog({
-            ...dog,
-            temperamentos: str
-        })
+    function onClickAdd() {
+        if (!(temperamentosAll[0] === 'No hay Temperamentos Seleccionados')) {
+            temperamentosAll.map(z => {
+                str = str + z + ', '
+            })
+            setDog({
+                ...dog,
+                temperamentos: str
+            })
+        }
     }
     function onSelectChange(e) {
         if (!temperamentosAll.includes(e.target.value)) {
@@ -191,20 +192,14 @@ export default function CreateDog() {
                 setTemperamentosAll([
                     e.target.value
                 ])
-                botonTemperamentos.disabled = false;
             } else {
 
                 setTemperamentosAll([
                     ...temperamentosAll,
                     e.target.value]
                 )
-
-
             }
         }
-
-
-
     }
 
 
@@ -295,24 +290,20 @@ export default function CreateDog() {
                         <div className="contenedorSpanTemperamentos">
                             {temperamentosAll[0] === 'No hay Temperamentos Seleccionados' ? <span className="spanTemperament"> No hay Temperamentos</span> :
                                 temperamentosAll.map((e, i) => {
-                                    return <span className="spanTemperament" key={i} value={e} onClick={(event) => {
-                                        event.preventDefault()
+                                    return <span className="spanTemperament" key={i} value={e} onClick={() => {
                                         let a = temperamentosAll.indexOf(e)
                                         let b = temperamentosAll.filter(z => z !== e)
                                         setTemperamentosAll(
                                             [...b]
                                         )
-                                        if (temperamentosAll.length === 0) {
-                                            botonTemperamentos.disabled = true;
-                                        }
 
-                                    }}>{e} <br/> </span>
+                                    }}>{e} <br /> </span>
                                 })
                             }
                         </div>
                     </div>
 
-                    <button className="botonAgregarTemps" onClick={onClickAdd} id='enviarTemps' disabled> Agregar Temperamentos Seleccioandos</button>
+                    <span className="botonAgregarTemps" onClick={onClickAdd}   > Agregar Temperamentos Seleccioandos</span>
 
                     <input type="submit" value='Enviar' id="enviar" className="botonEnviar" disabled />
                 </form>

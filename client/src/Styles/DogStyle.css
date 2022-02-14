@@ -1,0 +1,10 @@
+.conetenedorDog{
+    width: 21rem;
+    background-color: turquoise;
+    border-radius: 1rem;
+}
+.imgDog{
+    max-height: 19rem;
+    max-width: 19rem;
+    background-size: cover;
+}

@@ -59,35 +59,21 @@ position: fixed;
 }
 .spanTemperament{
     font-size: 1.3rem;
+    cursor: pointer;
 }
-.botonAgregarTemps:disabled{
-    height: 2rem;
+.botonAgregarTemps{
     position: fixed;
     left: 2rem;
     bottom: 2rem;
     height: 2.2rem;
-    width: auto;
-    border-radius: .3rem;
-    font-size: 1.3rem;
-    color: lightgray;
-    border-style: none;
-    background: linear-gradient(to left, #282C35 50%, lightgray 50%) right;
-    background-size: 200%;
-    opacity: .2;
-}
-.botonAgregarTemps:enabled{
-    position: fixed;
-    left: 2rem;
-    bottom: 2rem;
-    height: 2.2rem;
-    width: auto;
+    width: 24rem;
     border-radius: .3rem;
     font-size: 1.3rem;
     color: lightgray;
     border-style: none;
     background: linear-gradient(to left, lightgray 50%, #282C35 50%) left;
     background-size: 200%;
-    transition: .4s ease-out;
+    transition: .3s ease-out;
 }
 .botonAgregarTemps:hover{
     background-position: right;
