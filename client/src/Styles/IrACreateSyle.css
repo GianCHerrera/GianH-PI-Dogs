@@ -1,0 +1,19 @@
+.botonIrACrear{
+    position: fixed;
+    right: 1rem;
+    top: 2rem;
+    height: 2.2rem;
+    width: 11rem;
+    border-radius: .3rem;
+    font-size: 1.3rem;
+    color: lightgray;
+    border-style: none;
+    background: linear-gradient(to left, black 50%, lightgray 50%) right;
+    background-size: 200%;
+    transition: .4s ease-out;
+}
+.botonIrACrear:hover{
+    background-position: left;
+    color:#282C35 ;
+    cursor: pointer;
+}

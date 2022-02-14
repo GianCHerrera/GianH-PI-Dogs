@@ -1,21 +1,21 @@
-p{
-    font-size: 1.4rem;
-}
 .contenedorDogDetails{
     background-image: url('https://s1.best-wallpaper.net/wallpaper/m/1806/Dog-look-up-black-background_m.jpg');
     background-size: cover;
     color: white;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 .contenedorDogDetail{
-
+    height: 90%;
     background-color: transparent;
     backdrop-filter: blur(8px);
     width: 29rem;
     border-radius: 1rem;
+}
+html{
+    height: cover;
 }
 
 .TitleDogDetails{

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { filterByTemperament, getDbTemperaments } from "../store/actions";
 import OptionSelect from "./OptionSelect";
 import OptionSelectDefault from "./OptionSelectDefault";
+import '../Styles/FilterTemperamentsStyle.css'
 
 export default function FIilterTemperaments() {
 
@@ -15,10 +16,10 @@ export default function FIilterTemperaments() {
     function onSelectChange(e) {
         dispatch(filterByTemperament(e.target.value))
     }
-    return <select name="filterTemps" onChange={onSelectChange}>
+    return <select className="selectTemperaments" name="filterTemps" onChange={onSelectChange}>
             <OptionSelectDefault text='Filtrar por Temperamento'/>
             <OptionSelect value='.Todos' text='.Todos'/> 
-        {temps.map((temperamento) => {
+        {temps.map((temperamento,i) => {
             return t.push(temperamento.nombre)
         })}
         

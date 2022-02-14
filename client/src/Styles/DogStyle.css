@@ -1,10 +1,21 @@
+p{
+    font-size: 1.4rem;
+}
 .conetenedorDog{
     width: 21rem;
-    background-color: turquoise;
+    background-color: transparent;
+    backdrop-filter: blur(7px);
     border-radius: 1rem;
 }
 .imgDog{
     max-height: 19rem;
     max-width: 19rem;
     background-size: cover;
+}
+.h3NombreRazaDog{
+    color: white;
+    text-decoration: none;
+}
+.textDecorationNone{
+    text-decoration: none;
 }

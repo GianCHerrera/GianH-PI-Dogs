@@ -45,13 +45,13 @@ export function sort(order){
 }
 
 export function filterBySource(resource){
-    if(resource === API || resource === 'Filtrar por Recurso'){
+    if(resource === API){
         return getApiDogs();
     }else if(resource === BASE_DE_DATOS){
         return getDbDogs();
-    }else if(resource === TODOS){
+    }else 
         return fetchDogs()
-    }
+
 }
 
 export function filterByTemperament(temperament){

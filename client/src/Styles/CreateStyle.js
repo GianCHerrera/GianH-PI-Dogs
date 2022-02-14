@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const BigDiv = styled.div`
 background-image: url(https://wallpapercave.com/wp/wp3717660.jpg);
-height: 100%;
+    height: 100%;
     width: 100%;
     background-size: cover;
     display: flex;

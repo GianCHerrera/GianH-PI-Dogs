@@ -3,5 +3,5 @@
     display: grid;
     grid-template-columns: 20rem 20rem 20rem 20rem;
     gap: 2rem;
-
+    min-height: 65vh;
 }

@@ -1,0 +1,26 @@
+.inputSearch{
+    height: 1.7rem;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    margin: 2rem 1rem 2rem 0;
+    background-color: transparent;
+    color: lightgray;
+}
+.inputSearch:focus{
+    outline: none;
+    color: white;
+    border-bottom: 1px solid lightgray;
+}
+.botonSearch{
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    border-radius: .2rem;
+    color: lightgray;
+}
+.botonSearch:hover{
+    background-color: lightgray;
+    color: black;
+    cursor: pointer;
+}

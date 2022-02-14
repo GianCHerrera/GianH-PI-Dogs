@@ -4,6 +4,7 @@ import { API, BASE_DE_DATOS, TODOS } from "../constantes/filter";
 import { filterBySource } from "../store/actions";
 import OptionSelect from "./OptionSelect";
 import OptionSelectDefault from "./OptionSelectDefault";
+import '../Styles/FilterRazasStyle.css'
 
 export default function FilterRazas(){
 
@@ -13,7 +14,7 @@ export default function FilterRazas(){
         dispatch(filterBySource(e.target.value))
     }
 
-    return <select name="filterDogs" onChange={onSelectChange} >
+    return <select className="selectRazas" name="filterDogs" onChange={onSelectChange} >
         <OptionSelectDefault text='Filtrar por Recurso' />
         {
             opc.map( (op,i )=> {

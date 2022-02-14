@@ -62,6 +62,7 @@ position: fixed;
     cursor: pointer;
 }
 .botonAgregarTemps{
+    padding-top: .4rem;
     position: fixed;
     left: 2rem;
     bottom: 2rem;
@@ -79,4 +80,7 @@ position: fixed;
     background-position: right;
     color:#282C35 ;
     cursor: pointer;
+}
+.contenedorCreate{
+    height: 100vh;
 }

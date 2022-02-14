@@ -203,7 +203,7 @@ export default function CreateDog() {
     }
 
 
-    return <div style={Height}>
+    return <div className="contenedorCreate">
         <BigDiv>
             <FlexCenterDiv>
                 <h3 style={Tamanio}>Crea Tu Propia Raza!</h3>

@@ -3,7 +3,7 @@ import { ASCENDENTE, DESCENDENTE, PESOASCENDENTE, PESODESCENDENTE } from "../con
 import { sort } from "../store/actions"
 import OptionSelect from "./OptionSelect";
 import OptionSelectDefault from "./OptionSelectDefault";
-
+import '../Styles/Order.css'
 
 export default function Order(){
 
@@ -24,7 +24,7 @@ export default function Order(){
     function onSelectChange(e){
         dispatch(sort(e.target.value))
     }
-    return <select name='select' onChange={onSelectChange}>
+    return <select className="selectOrder" name='select' onChange={onSelectChange}>
     <OptionSelectDefault text='Selccionar orden'/>
     {
         opc.map((op,i)=>{

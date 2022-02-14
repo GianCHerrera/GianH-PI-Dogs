@@ -9,6 +9,9 @@ import Order from "./Order";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
 import '../Styles/MainStyle.css'
+import Footer from "./Footer";
+import IrACreate from "./IrACreate";
+import { Link } from "react-router-dom";
 
 export default function Main() {
 
@@ -25,11 +28,14 @@ export default function Main() {
     useEffect(() => {
         dispatch(fetchDogs())
     }, [])
-    return <div>
+    return <div className="contenedorMain">
         <SearchBar />
         <FIilterTemperaments />
         <FilterRazas />
         <Order />
+        <Link to='/create'>
+        <IrACreate/>
+        </Link>
     <div className='contenedorDogs'>
         <Dogs
             currentDogs={currentDogs} />
@@ -40,5 +46,6 @@ export default function Main() {
             allDogs={allDogs.length}
             paginado={paginado}
         />
+        <Footer/>
     </div>
 }
