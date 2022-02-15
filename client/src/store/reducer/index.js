@@ -42,6 +42,7 @@ export default function reducer(state = intialState, action) {
                 filteredTemperaments: action.payload
             }
         case FILTER_BY_TEMPERAMENT:
+            state.filteredDogs = [...state.dogs]
             let filterDogsByTemperament = [...state.filteredDogs];
             let result = [];
             filterDogsByTemperament.map(dog => {
